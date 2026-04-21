@@ -97,6 +97,10 @@ class SlayTheSpire2Game(Game):
     def randophilia_nono_is_here(self) -> bool:
         return self.archipelago_options.randophilia_nono_is_here.value
     
+    @property
+    def randophilia_niko_is_here(self) -> bool:
+        return self.archipelago_options.randophilia_niko_is_here.value
+    
     @staticmethod
     def ascension_levels() -> range:
         return range(0, 10+1, 1)

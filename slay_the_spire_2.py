@@ -90,6 +90,28 @@ class SlayTheSpire2Game(Game):
                     weight=2,
                 ),
             ])
+        # Challenge for Niko
+        if self.randophilia_niko_is_here:
+            game_objective_templates.extend([
+                GameObjectiveTemplate(
+                    label="[NIKO] Meet the Architect with the CHARACTER",
+                    data={
+                        "CHARACTER": (self.characters, 1),
+                    },
+                    is_time_consuming=False,
+                    is_difficult=False,
+                    weight=4,
+                ),
+                GameObjectiveTemplate(
+                    label="[NIKO] Meet the Architect in ascension ASCENSION",
+                    data={
+                        "ASCENSION": (self.ascension_levels, 1),
+                    },
+                    is_time_consuming=False,
+                    is_difficult=False,
+                    weight=1,
+                )
+            ])
 
         return game_objective_templates
     

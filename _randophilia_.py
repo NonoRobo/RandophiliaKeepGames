@@ -7,18 +7,22 @@ from ..enums import KeymastersKeepGamePlatforms
 
 @dataclass
 class RandophiliaServerArchipelagoOptions:
-    randophilia_nono_is_here: RandophiliaNonoIsHereOption
     randophilia_niko_is_here: RandophiliaNikoIsHereOption
+    randophilia_nono_is_here: RandophiliaNonoIsHereOption
+
+
+
+class RandophiliaNikoIsHereOption(Toggle):
+    """Include everything Niko can face in the Keep."""
+    display_name = "Randophilia - Niko is Here"
+    default = False
 
 class RandophiliaNonoIsHereOption(Toggle):
     """Include everything Nono can face in the Keep."""
     display_name = "Randophilia - Nono is Here"
     default = False
 
-class RandophiliaNikoIsHereOption(Toggle):
-    """Include everything Niko can face in the Keep."""
-    display_name = "Randophilia - Niko is Here"
-    default = False
+
 
 class RandophiliaServerKeepGame(Game):
     name = "Randophilia Server"

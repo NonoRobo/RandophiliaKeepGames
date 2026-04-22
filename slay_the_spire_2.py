@@ -32,6 +32,7 @@ class SlayTheSpire2Game(Game):
     def game_objective_templates(self) -> List[GameObjectiveTemplate]:
         game_objective_templates: List[GameObjectiveTemplate] = list()
 
+        # Challenges for Nono
         if self.randophilia_nono_is_here:
             game_objective_templates.extend([
                 GameObjectiveTemplate(
@@ -90,7 +91,8 @@ class SlayTheSpire2Game(Game):
                     weight=2,
                 ),
             ])
-        # Challenge for Niko
+
+        # Challenges for Niko
         if self.randophilia_niko_is_here:
             game_objective_templates.extend([
                 GameObjectiveTemplate(

@@ -32,6 +32,7 @@ class SlayTheSpire2Game(Game):
     def game_objective_templates(self) -> List[GameObjectiveTemplate]:
         game_objective_templates: List[GameObjectiveTemplate] = list()
 
+        # Challenges for Nono
         if self.randophilia_nono_is_here:
             game_objective_templates.extend([
                 GameObjectiveTemplate(
@@ -91,11 +92,38 @@ class SlayTheSpire2Game(Game):
                 ),
             ])
 
+        # Challenges for Niko
+        if self.randophilia_niko_is_here:
+            game_objective_templates.extend([
+                GameObjectiveTemplate(
+                    label="[NIKO] Meet the Architect with the CHARACTER",
+                    data={
+                        "CHARACTER": (self.characters, 1),
+                    },
+                    is_time_consuming=False,
+                    is_difficult=False,
+                    weight=4,
+                ),
+                GameObjectiveTemplate(
+                    label="[NIKO] Meet the Architect in ascension ASCENSION",
+                    data={
+                        "ASCENSION": (self.ascension_levels, 1),
+                    },
+                    is_time_consuming=False,
+                    is_difficult=False,
+                    weight=1,
+                )
+            ])
+
         return game_objective_templates
     
     @property
     def randophilia_nono_is_here(self) -> bool:
         return self.archipelago_options.randophilia_nono_is_here.value
+    
+    @property
+    def randophilia_niko_is_here(self) -> bool:
+        return self.archipelago_options.randophilia_niko_is_here.value
     
     @staticmethod
     def ascension_levels() -> range:

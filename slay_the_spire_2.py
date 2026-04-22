@@ -34,16 +34,9 @@ class SlayTheSpire2Game(Game):
 
         # Challenges for Nono
         if self.randophilia_nono_is_here:
-            game_objective_templates.extend([
-                GameObjectiveTemplate(
-                    label="[NONO] Meet the Architect with the CHARACTER",
-                    data={
-                        "CHARACTER": (self.characters, 1),
-                    },
-                    is_time_consuming=False,
-                    is_difficult=False,
-                    weight=4,
-                ),
+            nonobjectives: List[GameObjectiveTemplate] = list()
+            nonobjectives.extend(self.custom_objectives("NONO"))
+            nonobjectives.extend([
                 GameObjectiveTemplate(
                     label="[NONO] Meet the Architect with the CHARACTER in Ascension ASCENSION",
                     data={
@@ -52,45 +45,11 @@ class SlayTheSpire2Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=True,
-                    weight=1,
-                ),
-                GameObjectiveTemplate(
-                    label="[NONO] Win a custom run with CHARACTER, with modifier BAD_MODIFIER, in Ascension ASCENSION",
-                    data={
-                        "CHARACTER": (self.characters, 1),
-                        "BAD_MODIFIER": (self.bad_modifiers, 1),
-                        "ASCENSION": (self.ascension_levels, 1)
-                    },
-                    is_time_consuming=False,
-                    is_difficult=False,
-                    weight=2,
-                ),
-                GameObjectiveTemplate(
-                    label="[NONO] Win a custom run with CHARACTER, with modifiers GOOD_MODIFIER and BAD_MODIFIER, in Ascension ASCENSION",
-                    data={
-                        "CHARACTER": (self.characters, 1),
-                        "GOOD_MODIFIER": (self.all_good_modifiers, 1),
-                        "BAD_MODIFIER": (self.bad_modifiers, 1),
-                        "ASCENSION": (self.ascension_levels, 1)
-                    },
-                    is_time_consuming=False,
-                    is_difficult=True,
-                    weight=2,
-                ),
-                GameObjectiveTemplate(
-                    label="[NONO] Win a custom run with CHARACTER, with modifiers BICO_MODIFIER, GOOD_MODIFIER and BAD_MODIFIER, in Ascension ASCENSION",
-                    data={
-                        "CHARACTER": (self.characters, 1),
-                        "BICO_MODIFIER": (self.bicolor_modifiers, 1),
-                        "GOOD_MODIFIER": (self.except_bicolor_modifiers, 1),
-                        "BAD_MODIFIER": (self.bad_modifiers, 1),
-                        "ASCENSION": (self.ascension_levels, 1)
-                    },
-                    is_time_consuming=False,
-                    is_difficult=True,
-                    weight=2,
+                    # Set weight for 50/50 chance between Normal and Custom runs
+                    weight=max(sum(o.weight for o in nonobjectives), 1),
                 ),
             ])
+            game_objective_templates.extend(nonobjectives)
 
         # Challenges for Niko
         if self.randophilia_niko_is_here:
@@ -116,6 +75,39 @@ class SlayTheSpire2Game(Game):
             ])
 
         return game_objective_templates
+    
+    def custom_objectives(self, player_tag) -> List[GameObjectiveTemplate]:
+        """ Based on the configuration, generates a list of objective templates for Custom mode. """
+        objectives: List[GameObjectiveTemplate] = list()
+        objectives.extend([
+            GameObjectiveTemplate(
+                label=f"[{player_tag}] Win a custom run with CHARACTER, with modifier BAD_MODIFIER, in Ascension ASCENSION",
+                data={
+                    "CHARACTER": (self.characters, 1),
+                    "BAD_MODIFIER": (self.bad_modifiers, 1),
+                    "ASCENSION": (self.ascension_levels, 1)
+                },
+                is_time_consuming=False,
+                is_difficult=True,
+                weight=1,
+            ),
+        ])
+        for good_modifier_count in range(1, 2 + 1):
+            objectives.extend([
+                GameObjectiveTemplate(
+                    label=f"[{player_tag}] Win a custom run with CHARACTER, with modifiers [MODIFIERS] and BAD_MODIFIER, in Ascension ASCENSION",
+                    data={
+                        "CHARACTER": (self.characters, 1),
+                        "MODIFIERS": (self.all_good_modifiers, good_modifier_count),
+                        "BAD_MODIFIER": (self.bad_modifiers, 1),
+                        "ASCENSION": (self.ascension_levels, 1)
+                    },
+                    is_time_consuming=False,
+                    is_difficult=True,
+                    weight = 1 + good_modifier_count,
+                ),
+            ])
+        return objectives
     
     @property
     def randophilia_nono_is_here(self) -> bool:

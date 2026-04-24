@@ -92,7 +92,7 @@ class SlayTheSpire2Game(Game):
         for good_modifier_count in range(1, 2 + 1):
             objectives.extend([
                 GameObjectiveTemplate(
-                    label=f"[{player_tag}] Win a custom run with CHARACTER, with modifiers [MODIFIERS] and BAD_MODIFIER, in Ascension ASCENSION",
+                    label=f"[{player_tag}] Win a custom run with CHARACTER, with modifiers MODIFIERS and BAD_MODIFIER, in Ascension ASCENSION",
                     data={
                         "CHARACTER": (self.characters, 1),
                         "MODIFIERS": (self.all_good_modifiers, good_modifier_count),

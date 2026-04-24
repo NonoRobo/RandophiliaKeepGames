@@ -26,6 +26,10 @@ class CookServeDelicious2Game(Game):
 
     def game_objective_templates(self) -> List[GameObjectiveTemplate]:
         game_objective_templates: List[GameObjectiveTemplate] = list()
+    
+        #### Weight details
+        # 50% : Nono CSD
+        # 50% : Nono C4H
 
         if self.randophilia_nono_is_here:
             nonobjectives: List[GameObjectiveTemplate] = list()

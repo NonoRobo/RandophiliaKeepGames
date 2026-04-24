@@ -32,11 +32,20 @@ class SlayTheSpire2Game(Game):
     def game_objective_templates(self) -> List[GameObjectiveTemplate]:
         game_objective_templates: List[GameObjectiveTemplate] = list()
 
-        # Challenges for Nono
+        #### Weight details
+        # 50 % : Niko Normal run
+        # 25 % : Nono Normal run
+        # 25 % : Nono Custom run
+
+        # Custom Runs
+        custom_runs_total_weight: int = 1 # init to 1 even if no custom runs to ensure a valid minimum
         if self.randophilia_nono_is_here:
-            nonobjectives: List[GameObjectiveTemplate] = list()
-            nonobjectives.extend(self.custom_objectives("NONO"))
-            nonobjectives.extend([
+            game_objective_templates.extend(self.custom_objectives("NONO"))
+            custom_runs_total_weight = sum(o.weight for o in game_objective_templates)
+
+        # Normal Runs
+        if self.randophilia_nono_is_here:
+            game_objective_templates.extend([
                 GameObjectiveTemplate(
                     label="[NONO] Meet the Architect with the CHARACTER in Ascension ASCENSION",
                     data={
@@ -45,33 +54,21 @@ class SlayTheSpire2Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=True,
-                    # Set weight for 50/50 chance between Normal and Custom runs
-                    weight=max(sum(o.weight for o in nonobjectives), 1),
+                    weight=custom_runs_total_weight,
                 ),
             ])
-            game_objective_templates.extend(nonobjectives)
-
-        # Challenges for Niko
         if self.randophilia_niko_is_here:
             game_objective_templates.extend([
                 GameObjectiveTemplate(
-                    label="[NIKO] Meet the Architect with the CHARACTER",
+                    label="[NIKO] Meet the Architect with the CHARACTER in Ascension ASCENSION",
                     data={
                         "CHARACTER": (self.characters, 1),
+                        "ASCENSION": (self.ascension_levels, 1)
                     },
                     is_time_consuming=False,
-                    is_difficult=False,
-                    weight=4,
+                    is_difficult=True,
+                    weight=custom_runs_total_weight * 2, # since Nono's Runs are half custom half normal, Niko's Runs need to match the total!
                 ),
-                GameObjectiveTemplate(
-                    label="[NIKO] Meet the Architect in ascension ASCENSION",
-                    data={
-                        "ASCENSION": (self.ascension_levels, 1),
-                    },
-                    is_time_consuming=False,
-                    is_difficult=False,
-                    weight=1,
-                )
             ])
 
         return game_objective_templates

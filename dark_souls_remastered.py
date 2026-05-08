@@ -33,18 +33,17 @@ class DarkSoulsRemasteredGame(Game):
 
     def dsr_objectives(self, include_aotA: bool) -> List[GameObjectiveTemplate]:
         objectives = []
-        if include_aotA:
-            objectives.append(
-                GameObjectiveTemplate(
-                    label="Slain BOSS.",
-                    data={
-                        "BOSS": (lambda: self.boss(dlc=include_aotA), 1)
-                    },
-                    is_time_consuming=False,
-                    is_difficult=False,
-                    weight=1,
-                )
+        objectives.append(
+            GameObjectiveTemplate(
+                label="Slain BOSS.",
+                data={
+                    "BOSS": (lambda: self.boss(dlc=include_aotA), 1)
+                },
+                is_time_consuming=False,
+                is_difficult=False,
+                weight=1,
             )
+        )
         return objectives
 
     # Property

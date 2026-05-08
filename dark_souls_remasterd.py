@@ -27,12 +27,43 @@ class DarkSoulsRemasteredGame(Game):
         # Niko's objectives
         if self.randophilia_niko_is_here:
             nikobjectives: List[GameObjectiveTemplate] = list()
+            nikobjectives.extend(self.dsr_objectives(include_aotA=self.niko_dsr_include_aota))
+            game_objective_templates.extend(nikobjectives);
+        return game_objective_templates
+
+    def dsr_objectives(self, include_aotA: bool) -> List[GameObjectiveTemplate]:
+        objectives = []
+        if include_aotA:
+            objectives.append(
+                GameObjectiveTemplate(
+                    label="Slain BOSS.",
+                    data={
+                        "BOSS": (self.boss(dlc=self.include_aotA), 1)
+                    },
+                    is_time_consuming=False,
+                    is_difficult=False,
+                    # Favor higher entree counts
+                    weight=1,
+                )
+            )
+        return objectives
 
     # Property
     @property
     def randophilia_niko_is_here(self) -> bool:
         return self.archipelago_options.randophilia_niko_is_here.value
+    @property
+    def niko_dsr_include_aota(self) -> int:
+        return self.archipelago_options.niko_dsr_include_aota.value
+    
 
+    @staticmethod
+    def boss(self, dlc:bool) -> List[str]:
+        if dlc:
+            return self.dsr_vanillabosses + self.dsr_aotabosses
+        else:
+            return self.dsr_vanillabosses
+            
     @functools.cached_property
     def dsr_vanillabosses(self) -> List[str]:
         """Boss in vanilla game"""

@@ -38,7 +38,7 @@ class DarkSoulsRemasteredGame(Game):
                 GameObjectiveTemplate(
                     label="Slain BOSS.",
                     data={
-                        "BOSS": (self.boss(dlc=self.include_aotA), 1)
+                        "BOSS": (self.boss(self, dlc=include_aotA), 1)
                     },
                     is_time_consuming=False,
                     is_difficult=False,
@@ -107,5 +107,5 @@ class DSRNikoIncluteAotA(Toggle):
     """
     Niko wants to include Artorias of the Abyss in the Keep.
     """
-    display_name = "[NONNikoO] Include AotA"
+    display_name = "[Niko] Include AotA"
     default = True

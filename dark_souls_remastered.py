@@ -12,7 +12,7 @@ from ..enums import KeymastersKeepGamePlatforms
 
 @dataclass
 class DarkSoulsRemasteredArchipelagoOptions:
-    niko_dsr_include_aota:DSRNikoIncludeAotA
+    niko_dsr_include_aota: DSRNikoIncludeAotA
 
 class DarkSoulsRemasteredGame(Game):
     name = "Dark Souls Remastered"

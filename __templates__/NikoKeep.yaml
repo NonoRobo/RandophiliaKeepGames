@@ -47,9 +47,6 @@ Keymaster's Keep:
     ]
     
   randophilia_nono_is_here: 'false'
-  nono_csd2_max_yum: 79
-  nono_csd2_include_csd: 'false'
-  nono_csd2_include_c4h: 'false'
   
   randophilia_niko_is_here: 'true'
   niko_dsr_include_aota: 'true'

@@ -33,52 +33,39 @@ class SlayTheSpire2Game(Game):
         game_objective_templates: List[GameObjectiveTemplate] = list()
 
         #### Weight details
-        # 50 % : Niko Normal run
-        # 25 % : Nono Normal run
-        # 25 % : Nono Custom run
+        # 50 % : Niko & Nono Normal run
+        # 50 % : Nono Custom run
 
         # Custom Runs
         custom_runs_total_weight: int = 1 # init to 1 even if no custom runs to ensure a valid minimum
         if self.randophilia_nono_is_here:
-            game_objective_templates.extend(self.custom_objectives("NONO"))
+            game_objective_templates.extend(self.custom_objectives())
             custom_runs_total_weight = sum(o.weight for o in game_objective_templates)
 
         # Normal Runs
-        if self.randophilia_nono_is_here:
+        if self.randophilia_niko_is_here or self.randophilia_nono_is_here:
+            total_players: int = (1 if self.randophilia_niko_is_here else 0) + (1 if self.randophilia_nono_is_here else 0)
             game_objective_templates.extend([
                 GameObjectiveTemplate(
-                    label="[NONO] Meet the Architect with the CHARACTER in Ascension ASCENSION",
+                    label="Meet the Architect with the CHARACTER in Ascension ASCENSION",
                     data={
                         "CHARACTER": (self.characters, 1),
                         "ASCENSION": (self.ascension_levels, 1)
                     },
                     is_time_consuming=False,
                     is_difficult=True,
-                    weight=custom_runs_total_weight,
-                ),
-            ])
-        if self.randophilia_niko_is_here:
-            game_objective_templates.extend([
-                GameObjectiveTemplate(
-                    label="[NIKO] Meet the Architect with the CHARACTER in Ascension ASCENSION",
-                    data={
-                        "CHARACTER": (self.characters, 1),
-                        "ASCENSION": (self.ascension_levels, 1)
-                    },
-                    is_time_consuming=False,
-                    is_difficult=True,
-                    weight=custom_runs_total_weight * 2, # since Nono's Runs are half custom half normal, Niko's Runs need to match the total!
+                    weight=custom_runs_total_weight * total_players, # Niko doesn't do Customs, so we need extra weight when he's around
                 ),
             ])
 
         return game_objective_templates
     
-    def custom_objectives(self, player_tag) -> List[GameObjectiveTemplate]:
+    def custom_objectives(self) -> List[GameObjectiveTemplate]:
         """ Based on the configuration, generates a list of objective templates for Custom mode. """
         objectives: List[GameObjectiveTemplate] = list()
         objectives.extend([
             GameObjectiveTemplate(
-                label=f"[{player_tag}] Win a custom run with CHARACTER, with modifier BAD_MODIFIER, in Ascension ASCENSION",
+                label="Win a custom run with CHARACTER, with modifier BAD_MODIFIER, in Ascension ASCENSION",
                 data={
                     "CHARACTER": (self.characters, 1),
                     "BAD_MODIFIER": (self.bad_modifiers, 1),
@@ -92,7 +79,7 @@ class SlayTheSpire2Game(Game):
         for good_modifier_count in range(1, 2 + 1):
             objectives.extend([
                 GameObjectiveTemplate(
-                    label=f"[{player_tag}] Win a custom run with CHARACTER, with modifiers MODIFIERS and BAD_MODIFIER, in Ascension ASCENSION",
+                    label="Win a custom run with CHARACTER, with modifiers MODIFIERS and BAD_MODIFIER, in Ascension ASCENSION",
                     data={
                         "CHARACTER": (self.characters, 1),
                         "MODIFIERS": (self.all_good_modifiers, good_modifier_count),

@@ -44,7 +44,8 @@ Keymaster's Keep:
     [
       'Cook, Serve, Delicious! 2!! (PC)',
       'Slay the Spire 2 (PC)',
-      'Unrailed! (PC)'
+      'Unrailed! (PC)',
+      'Dark Souls Remastered (PC)'
     ]
     
   randophilia_nono_is_here: 'true'
@@ -53,6 +54,7 @@ Keymaster's Keep:
   nono_csd2_include_c4h: 'true'
   
   randophilia_niko_is_here: 'true'
+  niko_dsr_include_aota: 'true'
 
   custom_objective_list: []
   game_backlog_game_selection: []

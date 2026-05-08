@@ -12,7 +12,7 @@ from ..enums import KeymastersKeepGamePlatforms
 
 @dataclass
 class DarkSoulsRemasteredArchipelagoOptions:
-    niko_dsr_include_aota:DSRNikoIncluteAotA
+    niko_dsr_include_aota:DSRNikoIncludeAotA
 
 class DarkSoulsRemasteredGame(Game):
     name = "Dark Souls Remastered"
@@ -28,7 +28,7 @@ class DarkSoulsRemasteredGame(Game):
         if self.randophilia_niko_is_here:
             nikobjectives: List[GameObjectiveTemplate] = list()
             nikobjectives.extend(self.dsr_objectives(include_aotA=self.niko_dsr_include_aota))
-            game_objective_templates.extend(nikobjectives);
+            game_objective_templates.extend(nikobjectives)
         return game_objective_templates
 
     def dsr_objectives(self, include_aotA: bool) -> List[GameObjectiveTemplate]:
@@ -38,11 +38,10 @@ class DarkSoulsRemasteredGame(Game):
                 GameObjectiveTemplate(
                     label="Slain BOSS.",
                     data={
-                        "BOSS": (self.boss(self, dlc=include_aotA), 1)
+                        "BOSS": (lambda: self.boss(dlc=include_aotA), 1)
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    # Favor higher entree counts
                     weight=1,
                 )
             )
@@ -57,7 +56,6 @@ class DarkSoulsRemasteredGame(Game):
         return self.archipelago_options.niko_dsr_include_aota.value
     
 
-    @staticmethod
     def boss(self, dlc:bool) -> List[str]:
         if dlc:
             return self.dsr_vanillabosses + self.dsr_aotabosses
@@ -100,10 +98,8 @@ class DarkSoulsRemasteredGame(Game):
             "Manus, Father of the Abyss",
             "Sanctuary Guardian"
         ]
-
-
-        
-class DSRNikoIncluteAotA(Toggle):
+          
+class DSRNikoIncludeAotA(Toggle):
     """
     Niko wants to include Artorias of the Abyss in the Keep.
     """

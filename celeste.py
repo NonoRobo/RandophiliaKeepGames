@@ -5,7 +5,7 @@ from typing import List
 
 from dataclasses import dataclass
 
-from Options import Toggle
+from Options import Toggle, Range
 from ..game import Game
 from ..game_objective_template import GameObjectiveTemplate
 from ..enums import KeymastersKeepGamePlatforms
@@ -24,6 +24,25 @@ class CelesteGame(Game):
     is_adult_only_or_unrated = False
     options_cls = CelesteArchipelagoOptions
     
+    def optional_game_constraint_templates(self) -> List[GameObjectiveTemplate]:
+        constraints = []
+        constraints.extend([
+            GameObjectiveTemplate(
+                label="Collect between NUMBER1 and NUMBER2 strawberries.",
+                data={
+                    "NUMBER1": (self.berry_count_range1, 1),
+                    "NUMBER2": (self.berry_count_range2, 1),
+                },
+                weight=10,
+            ),
+            GameObjectiveTemplate(
+                label="None",
+                data={},
+                weight=90,
+            ),
+        ])
+        return constraints
+
     def game_objective_templates(self) -> List[GameObjectiveTemplate]:
         game_objective_templates: List[GameObjectiveTemplate] = list()
         
@@ -66,7 +85,12 @@ class CelesteGame(Game):
             face.extend(["Face C"])
         return face
     
-
+    @staticmethod
+    def berry_count_range1() -> range:
+        return range(0, 3)
+    @staticmethod
+    def berry_count_range2() -> range:
+        return range(5, 15)
     #Propert
     @property
     def randophilia_niko_is_here(self) -> bool:

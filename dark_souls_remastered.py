@@ -33,17 +33,26 @@ class DarkSoulsRemasteredGame(Game):
 
     def dsr_objectives(self, include_aotA: bool) -> List[GameObjectiveTemplate]:
         objectives = []
-        objectives.append(
+        objectives.extend([
             GameObjectiveTemplate(
-                label="Slain BOSS.",
+                label="Slain BOSS",
                 data={
                     "BOSS": (lambda: self.boss(dlc=include_aotA), 1)
                 },
                 is_time_consuming=False,
                 is_difficult=False,
+                weight=4,
+            ),
+             GameObjectiveTemplate(
+                label="Travel between this two areas : AREA",
+                data={
+                    "AREA": (lambda: self.areas(dlc=include_aotA), 2)
+                },
+                is_time_consuming=False,
+                is_difficult=False,
                 weight=1,
-            )
-        )
+            ),
+        ])
         return objectives
 
     # Property
@@ -60,7 +69,42 @@ class DarkSoulsRemasteredGame(Game):
             return self.dsr_vanillabosses + self.dsr_aotabosses
         else:
             return self.dsr_vanillabosses
-            
+        
+    def areas(self, dlc:bool) -> List[str]:
+        if dlc:
+            return self.dsr_vanilla_area + self.dsr_aot_areas
+        else:
+            return self.dsr_vanilla_area
+
+    @functools.cached_property
+    def dsr_vanilla_area (self) -> List[str]:
+        """Areas in vanilla game"""
+        return [
+            "Northern Undean Asylum",
+            "Firelink Shrine",
+            "Undead Burg",
+            "Undead Parish",
+            "Depths",
+            "Blighttown",
+            "Quelaag's Domain",
+            "Sen's Fortress",
+            "Anor Londo",
+            "Darkroot Garden",
+            "Darkroot Basin",
+            "New Londo Ruins",
+            "The Duke's Archives",
+            "Crystal Cave",
+            "Demon Ruins",
+            "Lost Izalith",
+            "The Catacombs",
+            "Tomb of the Giants",
+            "Ash Lake",
+            "The Painted World of Ariamis",
+            "The Great Hollow",
+            "The Abyss",
+            "The Valley of Drakes",
+            "The Kiln of the First Flame"
+        ]
     @functools.cached_property
     def dsr_vanillabosses(self) -> List[str]:
         """Boss in vanilla game"""
@@ -86,6 +130,17 @@ class DarkSoulsRemasteredGame(Game):
             "Stray Demon",
             "Taurus Demon",
             "The Bed of Chaos"
+        ]
+    
+    @functools.cached_property
+    def dsr_aot_areas(self) -> List[str]:
+        """Areas in Artorias of the Abyss DLC game"""
+        return [
+            "Sanctuary Garden",
+            "Oolacile Township",
+            "Oolacile Sanctuary",
+            "Royal Wood",
+            "Chasm of the Abyss"
         ]
     
     @functools.cached_property

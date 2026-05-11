@@ -14,8 +14,8 @@ from ..enums import KeymastersKeepGamePlatforms
 class CelesteArchipelagoOptions:
     niko_celeste_include_core: CelesteIncludeCore
     niko_celeste_include_farewell: CelesteIncludeFarewell
-    niko_celeste_include_b_face: CelesteIncludeBFace
-    niko_celeste_include_c_face: CelesteIncludeCFace
+    niko_celeste_include_c_side: CelesteIncludeCFace
+    niko_celeste_include_b_side: CelesteIncludeBFace
 
 class CelesteGame(Game):
     name = "Celeste"
@@ -23,10 +23,10 @@ class CelesteGame(Game):
     platforms_other = None
     is_adult_only_or_unrated = False
     options_cls = CelesteArchipelagoOptions
-
+    
     def game_objective_templates(self) -> List[GameObjectiveTemplate]:
         game_objective_templates: List[GameObjectiveTemplate] = list()
-
+        
         if self.randophilia_niko_is_here:
             nikobjectives: List[GameObjectiveTemplate] = list()
             nikobjectives.extend(self.celeste_objectives(include_core=self.niko_celeste_include_core, include_farewell=self.niko_celeste_include_farewell))
@@ -37,10 +37,10 @@ class CelesteGame(Game):
         celeste_objectives: List[GameObjectiveTemplate] = list()
         celeste_objectives.append(
             GameObjectiveTemplate(
-                label="Complete the CHAPTER on [FACE]",
+                label="Complete the CHAPTER on FACE",
                 data={
                     "CHAPTER": (lambda: self.get_celeste_chapters(include_core=include_core, include_farewell=include_farewell), 1),
-                    "FACE": (lambda: self.get_celeste_face(include_b=True, include_c=True), 1)
+                    "FACE": (lambda: self.get_celeste_face(include_b=self.niko_celeste_include_b_side, include_c=self.niko_celeste_include_c_side), 1)
                 },
                 is_time_consuming=False,
                 is_difficult=False,
@@ -66,13 +66,20 @@ class CelesteGame(Game):
             face.extend(["Face C"])
         return face
     
-    #Property
+
+    #Propert
     @property
     def randophilia_niko_is_here(self) -> bool:
         return self.archipelago_options.randophilia_niko_is_here.value
     @property
     def niko_celeste_include_core(self) -> int:
         return self.archipelago_options.niko_celeste_include_core.value
+    @property
+    def niko_celeste_include_b_side(self) -> int:
+        return self.archipelago_options.niko_celeste_include_b_side.value
+    @property
+    def niko_celeste_include_c_side(self) -> int:
+        return self.archipelago_options.niko_celeste_include_c_side.value
     @property
     def niko_celeste_include_farewell(self) -> int:
         return self.archipelago_options.niko_celeste_include_farewell.value

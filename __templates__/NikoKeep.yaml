@@ -43,13 +43,18 @@ Keymaster's Keep:
   game_selection:
     [
       'Dark Souls Remastered (PC)',
-      'Slay the Spire 2 (PC)'
+      'Slay the Spire 2 (PC)',
+      'Celeste (PC)',
     ]
     
   randophilia_nono_is_here: 'false'
   
   randophilia_niko_is_here: 'true'
   niko_dsr_include_aota: 'true'
+  niko_celeste_include_core: 'false'
+  niko_celeste_include_farewell: 'false'
+  niko_celeste_include_b_side: 'false'
+  niko_celeste_include_c_side: 'true'
 
   custom_objective_list: []
   game_backlog_game_selection: []

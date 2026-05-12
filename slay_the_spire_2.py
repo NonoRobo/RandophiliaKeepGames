@@ -108,10 +108,9 @@ class SlayTheSpire2Game(Game):
     @staticmethod
     def characters() -> List[str]:
         return ["Iron Clad","Silent","Regent","Necrobinder","Defect"]
-
-    @staticmethod
-    def all_good_modifiers() -> List[str]:
-        return ["Draft","Sealed Deck","Hoarder","Specialized","Insanity","All Star","Flight","Vintage","Ironclad Cards","Silent Cards","Regent Cards","Necrobinder Cards","Defect Cards"]
+  
+    def all_good_modifiers(self) -> List[str]:
+        return self.except_bicolor_modifiers() + self.bicolor_modifiers()
 
     @staticmethod
     def except_bicolor_modifiers() -> List[str]:

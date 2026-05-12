@@ -37,7 +37,7 @@ class UnrailedGame(Game):
         if self.randophilia_niko_is_here and self.randophilia_nono_is_here:
             game_objective_templates.extend([
                 GameObjectiveTemplate(
-                    label="[NoNi] Reach biome BIOME in Endless Mode.",
+                    label="Reach biome BIOME in Endless Mode.",
                     data={
                         "BIOME": (self.biomes, 1),
                     },
@@ -46,7 +46,7 @@ class UnrailedGame(Game):
                     weight=1,
                 ),
                 GameObjectiveTemplate(
-                    label="[NoNi] Reach a distance of DISTANCE in Endless Mode.",
+                    label="Reach a distance of DISTANCE in Endless Mode.",
                     data={
                         "DISTANCE": (self.endless_track_distances, 1),
                     },
@@ -55,7 +55,7 @@ class UnrailedGame(Game):
                     weight=1,
                 ),
                 GameObjectiveTemplate(
-                    label="[NoNi] Win a Quick Mode game in DIFFICULTY.",
+                    label="Win a Quick Mode game in DIFFICULTY.",
                     data={
                         "DIFFICULTY": (self.difficulties, 1),
                     },
@@ -64,7 +64,7 @@ class UnrailedGame(Game):
                     weight=1,
                 ),
                 GameObjectiveTemplate(
-                    label="[NoNi] Reach the second biome in Time Mode.",
+                    label="Reach the second biome in Time Mode.",
                     data={},
                     is_time_consuming=False,
                     is_difficult=False,

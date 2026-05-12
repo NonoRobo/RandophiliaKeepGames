@@ -12,10 +12,10 @@ from ..enums import KeymastersKeepGamePlatforms
 
 @dataclass
 class CelesteArchipelagoOptions:
-    niko_celeste_include_core: CelesteIncludeCore
-    niko_celeste_include_farewell: CelesteIncludeFarewell
-    niko_celeste_include_c_side: CelesteIncludeCFace
-    niko_celeste_include_b_side: CelesteIncludeBFace
+    niko_celeste_include_core: CelesteNikoIncludeCore
+    niko_celeste_include_farewell: CelesteNikoIncludeFarewell
+    niko_celeste_include_c_side: CelesteNikoIncludeCFace
+    niko_celeste_include_b_side: CelesteNikoIncludeBFace
 
 class CelesteGame(Game):
     name = "Celeste"
@@ -91,7 +91,8 @@ class CelesteGame(Game):
     @staticmethod
     def berry_count_range2() -> range:
         return range(5, 15)
-    #Propert
+    
+    #Property
     @property
     def randophilia_niko_is_here(self) -> bool:
         return self.archipelago_options.randophilia_niko_is_here.value
@@ -122,28 +123,28 @@ class CelesteGame(Game):
         ]
     
 
-class CelesteIncludeCore(Toggle):
+class CelesteNikoIncludeCore(Toggle):
     """
     Niko wants to include the eighth chapter, the Core, in the Keep.
     """
     display_name = "[Niko] Include The Core"
     default = False
 
-class CelesteIncludeFarewell(Toggle):
+class CelesteNikoIncludeFarewell(Toggle):
     """
     Niko wants to include the farewell chapter in the Keep.
     """
     display_name = "[Niko] Include Farewell"
     default = False
 
-class CelesteIncludeBFace(Toggle):
+class CelesteNikoIncludeBFace(Toggle):
     """
     Niko wants to include the B-side remixes of the main chapters in the Keep.
     """
     display_name = "[Niko] Include B-Face"
     default = False
 
-class CelesteIncludeCFace(Toggle):
+class CelesteNikoIncludeCFace(Toggle):
     """
     Niko wants to include the C-side remixes of the main chapters in the Keep. Note that the C-sides are generally much more difficult than the B-sides, so enabling this option will add a lot of difficult objectives to the pool.
     """

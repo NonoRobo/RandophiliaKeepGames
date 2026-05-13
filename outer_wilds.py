@@ -57,7 +57,7 @@ class OuterWildsGame(Game):
             + self.planet_objectives("Brittle Hollow", self.brittle_hollow_places)
             + [
                 GameObjectiveTemplate(
-                    label=f"Take a picture of or from PLACE.",
+                    label=f"Take a picture of/from PLACE.",
                     data={
                         "PLACE": (self.other_places, 1),
                     },
@@ -71,7 +71,7 @@ class OuterWildsGame(Game):
     def planet_objectives(planet_name, places) -> List[GameObjectiveTemplate]:
         return [
             GameObjectiveTemplate(
-                label=f"Take a picture of or from PLACE ({planet_name}).",
+                label=f"Take a picture of/from PLACE ({planet_name}).",
                 data={
                     "PLACE": (places, 1),
                 },
